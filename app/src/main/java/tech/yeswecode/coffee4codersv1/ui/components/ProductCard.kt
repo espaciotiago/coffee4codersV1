@@ -116,7 +116,7 @@ fun ProductCard(name: String,
 @Composable
 fun ProductCardPreview() {
     Coffee4Codersv1Theme {
-        ProductCard(name = "Café de Colombia",
+        ProductCard(name = "Café de Nicaragua",
             summary = "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
             price = 35.0,
             currency = "USD",
