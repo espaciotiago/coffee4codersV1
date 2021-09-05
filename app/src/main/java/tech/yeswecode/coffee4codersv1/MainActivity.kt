@@ -7,6 +7,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import tech.yeswecode.coffee4codersv1.ui.components.CountryISO
 import tech.yeswecode.coffee4codersv1.ui.components.ProductCard
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 
@@ -21,7 +22,11 @@ class MainActivity : ComponentActivity() {
 fun FeedScreen() {
     Coffee4Codersv1Theme {
         Surface(color = MaterialTheme.colors.background) {
-            ProductCard()
+            ProductCard(name = "Café de Colombia",
+                summary = "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
+                price = 35.0,
+                currency = "USD",
+                country = CountryISO.COL)
         }
     }
 }

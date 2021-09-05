@@ -11,15 +11,54 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 import tech.yeswecode.coffee4codersv1.ui.theme.PlatziBlue
+import tech.yeswecode.coffee4codersv1.ui.theme.PlatziGreen
+
+enum class CountryISO(val iso: String) {
+    COL("COL"),
+    BRA("BRA"),
+    CRI("CRI"),
+    NIC("NIC");
+
+    fun getBackgroundImage(): Int {
+        when (this) {
+            COL -> return R.drawable.co
+            BRA -> return R.drawable.br
+            CRI -> return R.drawable.ri
+            NIC -> return R.drawable.ni
+        }
+    }
+
+    fun getCountryFlag(): Int {
+        when (this) {
+            COL -> return R.drawable.flagco
+            BRA -> return R.drawable.flagbr
+            CRI -> return R.drawable.flagri
+            NIC -> return R.drawable.flagni
+        }
+    }
+
+    fun getSurfaceColor(): Color {
+        when (this) {
+            COL, NIC -> return PlatziBlue
+            BRA, CRI -> return PlatziGreen
+        }
+    }
+}
 
 @Composable
-fun ProductCard() {
+fun ProductCard(name: String,
+                summary: String,
+                price: Double,
+                currency: String,
+                country: CountryISO) {
+
     Card(modifier = Modifier
         .fillMaxWidth()
         .padding(16.dp)
@@ -30,10 +69,12 @@ fun ProductCard() {
         shape = MaterialTheme.shapes.small,
         elevation = 10.dp,
     ) {
-        Image(painter = painterResource(id = R.drawable.co),
-            contentDescription = null)
+        Image(
+            painter = painterResource(id = country.getBackgroundImage()),
+            contentDescription = null
+        )
         Surface(
-            color = PlatziBlue.copy(alpha = 0.4f),
+            color = country.getSurfaceColor().copy(alpha = 0.2f),
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -41,12 +82,12 @@ fun ProductCard() {
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = "Café de Colombia",
+                    text = name,
                     style = MaterialTheme.typography.h4,
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    text = "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
+                    text = summary,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center
                 )
@@ -55,12 +96,12 @@ fun ProductCard() {
                     verticalArrangement = Arrangement.Bottom
                 ) {
                     Row(){
-                        Image(painter = painterResource(id = R.drawable.flagco),
+                        Image(painter = painterResource(id = country.getCountryFlag()),
                             contentDescription = null,
                             modifier = Modifier.size(32.dp, 32.dp))
                         Text(
                             modifier = Modifier.fillMaxWidth(),
-                            text = "$ 35 USD",
+                            text = "$ $price $currency",
                             style = MaterialTheme.typography.h4,
                             textAlign = TextAlign.End
                         )
@@ -75,6 +116,10 @@ fun ProductCard() {
 @Composable
 fun ProductCardPreview() {
     Coffee4Codersv1Theme {
-        ProductCard()
+        ProductCard(name = "Café de Colombia",
+            summary = "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
+            price = 35.0,
+            currency = "USD",
+            country = CountryISO.NIC)
     }
 }
