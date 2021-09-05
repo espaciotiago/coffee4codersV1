@@ -5,34 +5,29 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import tech.yeswecode.coffee4codersv1.ui.components.ProductCard
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            Coffee4Codersv1Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
-            }
+        setContent { FeedScreen() }
+    }
+}
+
+@Composable
+fun FeedScreen() {
+    Coffee4Codersv1Theme {
+        Surface(color = MaterialTheme.colors.background) {
+            ProductCard()
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    Coffee4Codersv1Theme {
-        Greeting("Android")
-    }
+fun ProductCardPreview() {
+    FeedScreen()
 }

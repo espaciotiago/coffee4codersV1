@@ -38,9 +38,15 @@ fun Coffee4Codersv1Theme(
         LightColorPalette
     }
 
+    val typography = if (darkTheme) {
+        TypographyDark
+    } else {
+        Typography
+    }
+
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+        typography = typography,
         shapes = Shapes,
         content = content
     )
