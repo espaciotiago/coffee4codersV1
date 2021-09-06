@@ -15,6 +15,7 @@ import tech.yeswecode.coffee4codersv1.ui.screens.DetailScreen
 import tech.yeswecode.coffee4codersv1.ui.screens.FeedScreen
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 import tech.yeswecode.coffee4codersv1.viewModels.CountryISO
+import tech.yeswecode.coffee4codersv1.viewModels.DetailViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,10 +31,10 @@ fun NavigationHost() {
         Surface(color = MaterialTheme.colors.background) {
             NavHost(navController = navController, startDestination = "feed") {
                 composable("feed") { FeedScreen(navController = navController) }
-                composable("detail/{countryIso}") { backStackEntry ->
-                    val countryIsoString = backStackEntry.arguments?.getString("countryIso") ?: "COL"
-                    val countryIso = CountryISO.valueOf(countryIsoString)
-                    DetailScreen(navController = navController, country = countryIso)
+                composable("detail/{productId}") { backStackEntry ->
+                    val productIdString = backStackEntry.arguments?.getString("countryIso") ?: "0"
+                    val productId = productIdString.toInt()
+                    DetailScreen(navController = navController, detailVM = DetailViewModel(productId = productId))
                 }
                 composable("checkout/{countryIso}") { backStackEntry ->
                     val countryIsoString = backStackEntry.arguments?.getString("countryIso") ?: "COL"

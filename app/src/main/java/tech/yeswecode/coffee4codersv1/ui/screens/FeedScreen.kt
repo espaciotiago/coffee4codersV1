@@ -46,7 +46,7 @@ fun FeedScreen(navController: NavController, feedVM: FeedViewModel = FeedViewMod
                     }
                     items(feed.value) { p ->
                         ProductCard(ProductViewModel(p.product)) {
-                            navController.navigate("detail/${p.getCountry().iso}") {
+                            navController.navigate("detail/${p.getId()}") {
                                 launchSingleTop = true
                             }
                         }

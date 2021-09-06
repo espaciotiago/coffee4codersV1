@@ -43,6 +43,10 @@ enum class CountryISO(val iso: String) {
 class ProductViewModel(product: Product) {
     val product = product
 
+    fun getId(): Int {
+        return product.id
+    }
+
     fun getName(): String {
         return product.name
     }

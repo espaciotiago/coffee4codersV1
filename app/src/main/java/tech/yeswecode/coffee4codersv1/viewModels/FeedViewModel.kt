@@ -21,7 +21,7 @@ class FeedViewModel {
                 val feedMock = Product.list().map { ProductViewModel(it) }
                 _feed.value = feedMock as ArrayList<ProductViewModel>
             },
-            5000
+            1000
         )
     }
 }

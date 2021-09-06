@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -16,12 +17,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import tech.yeswecode.coffee4codersv1.models.Product
 import tech.yeswecode.coffee4codersv1.ui.components.*
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
-import tech.yeswecode.coffee4codersv1.viewModels.CountryISO
+import tech.yeswecode.coffee4codersv1.viewModels.DetailViewModel
+import tech.yeswecode.coffee4codersv1.viewModels.ProductViewModel
 
 @Composable
-fun DetailScreen(navController: NavController, country: CountryISO) {
+fun DetailScreen(navController: NavController, detailVM: DetailViewModel) {
+    val emptyProduct = Product(0,"","","",0.0,"","COL")
+    val product = detailVM.productVM.observeAsState(ProductViewModel(product = emptyProduct))
 
     fun onBackPressed() {
         navController.navigate("feed") {
@@ -38,29 +43,29 @@ fun DetailScreen(navController: NavController, country: CountryISO) {
                     .fillMaxWidth()
                     .height(400.dp)) {
                     Image(
-                        painter = painterResource(id = country.getBackgroundImage()),
+                        painter = painterResource(id = product.value.getCountry().getBackgroundImage()),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
                 Column(modifier = Modifier.padding(16.dp)) {
-                    TitleText(title = "Café de Colombia")
-                    Text("Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae.",
+                    TitleText(title = product.value.getName())
+                    Text(product.value.getSummary(),
                         style = MaterialTheme.typography.caption)
                     Spacer(modifier = Modifier.height(24.dp))
-                    BodyText(body = "Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.. Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum. Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.. Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.")
+                    BodyText(body = product.value.getDescription())
                     Spacer(modifier = Modifier.height(24.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
 
                         Text(
-                            text = "$ 35.0 USD",
+                            text = "$ ${product.value.getPrice()} ${product.value.getCurrency()}",
                             style = MaterialTheme.typography.h5,
                             textAlign = TextAlign.Start
                         )
 
                         CustomButton(label = "Continuar") {
-                            navController.navigate("checkout/${country.iso}") {
+                            navController.navigate("checkout/${product.value.getCountry().iso}") {
                                 launchSingleTop = true
                             }
                         }
@@ -77,6 +82,6 @@ fun DetailScreen(navController: NavController, country: CountryISO) {
 fun DetailScreenPreview() {
     val navController = rememberNavController()
     Coffee4Codersv1Theme {
-        DetailScreen(navController = navController, country = CountryISO.COL)
+        DetailScreen(navController = navController, detailVM = DetailViewModel(0))
     }
 }
