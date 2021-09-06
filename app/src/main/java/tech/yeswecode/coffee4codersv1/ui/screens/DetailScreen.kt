@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -53,9 +54,17 @@ fun DetailScreen(navController: NavController, country: CountryISO) {
                     Spacer(modifier = Modifier.height(24.dp))
                     BodyText(body = "Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.. Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum. Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.. Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.")
                     Spacer(modifier = Modifier.height(24.dp))
-                    Row {
+                    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
 
-                        Button(onClick = { /*TODO*/ },
+                        Text(
+                            text = "$ 35.0 USD",
+                            style = MaterialTheme.typography.h5,
+                            textAlign = TextAlign.End
+                        )
+
+                        Button(onClick = {
+                        },
+                            modifier = Modifier.fillMaxWidth(),
                             shape = MaterialTheme.shapes.large,
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = MaterialTheme.colors.secondary,
