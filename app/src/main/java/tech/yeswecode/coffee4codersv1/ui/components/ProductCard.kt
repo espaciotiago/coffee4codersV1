@@ -20,6 +20,8 @@ import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 import tech.yeswecode.coffee4codersv1.ui.theme.PlatziBlue
 import tech.yeswecode.coffee4codersv1.ui.theme.PlatziGreen
 
+typealias SelectionAction = () -> Unit
+
 enum class CountryISO(val iso: String) {
     COL("COL"),
     BRA("BRA"),
@@ -51,8 +53,6 @@ enum class CountryISO(val iso: String) {
         }
     }
 }
-
-typealias SelectionAction = () -> Unit
 
 @Composable
 fun ProductCard(name: String,
