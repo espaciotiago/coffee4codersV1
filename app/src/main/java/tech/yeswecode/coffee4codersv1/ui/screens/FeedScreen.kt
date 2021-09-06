@@ -1,12 +1,13 @@
 package tech.yeswecode.coffee4codersv1.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,28 +17,38 @@ import tech.yeswecode.coffee4codersv1.models.Product
 import tech.yeswecode.coffee4codersv1.ui.components.*
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 import tech.yeswecode.coffee4codersv1.viewModels.CountryISO
+import tech.yeswecode.coffee4codersv1.viewModels.FeedViewModel
 import tech.yeswecode.coffee4codersv1.viewModels.ProductViewModel
 
 @Composable
-fun FeedScreen(navController: NavController) {
-    val product = Product.list()[0]
-    val list = listOf<CountryISO>(CountryISO.COL, CountryISO.CRI, CountryISO.NIC, CountryISO.BRA)
+fun FeedScreen(navController: NavController, feedVM: FeedViewModel = FeedViewModel()) {
+    val feed = feedVM.feed.observeAsState(ArrayList())
 
     Scaffold(
         topBar = { CustomAppBar() }, content = {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                item {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        TitleText("Bienvenido")
-                        BodyText(body = "Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.. Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.")
-                    }
+            if(feed.value.isEmpty()){
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(32.dp)) {
+                    CircularProgressIndicator()
                 }
-                items(list) { country ->
-                    ProductCard(ProductViewModel(product)) {
-                        navController.navigate("detail/${country.iso}") {
-                            launchSingleTop = true
+            } else {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    item {
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            TitleText("Bienvenido")
+                            BodyText(body = "Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.. Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.")
+                        }
+                    }
+                    items(feed.value) { p ->
+                        ProductCard(ProductViewModel(p.product)) {
+                            navController.navigate("detail/${p.getCountry().iso}") {
+                                launchSingleTop = true
+                            }
                         }
                     }
                 }
