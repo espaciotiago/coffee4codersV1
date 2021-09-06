@@ -12,43 +12,20 @@ class DetailViewModel(productId: Int) {
     private val _productVM = MutableLiveData(ProductViewModel(product = emptyProduct))
     val productVM: LiveData<ProductViewModel> = _productVM
 
+    private val _loading = MutableLiveData(false)
+    val loading: LiveData<Boolean> = _loading
+
     init {
         getProduct(byId = productId)
     }
 
-    fun getId(): Int {
-        return productVM.value?.getId() ?: 0
-    }
-
-    fun getName(): String {
-        return productVM.value?.getName() ?: ""
-    }
-
-    fun getSummary(): String {
-        return productVM.value?.getSummary() ?: ""
-    }
-
-    fun getDescription(): String {
-        return productVM.value?.getDescription() ?: ""
-    }
-
-    fun getPrice(): Double {
-        return productVM.value?.getPrice() ?: 0.0
-    }
-
-    fun getCurrency(): String {
-        return productVM.value?.getCurrency() ?: ""
-    }
-
-    fun getCountry(): CountryISO {
-        return productVM.value?.getCountry() ?: CountryISO.COL
-    }
-
     private fun getProduct(byId: Int) {
+        _loading.value = true
         Handler(Looper.getMainLooper()).postDelayed(
             {
                 val productSelected = Product.list().find { it.id == byId }
                 _productVM.value = productSelected?.let { ProductViewModel(product = it) }
+                _loading.value = false
             }, 1000)
     }
 }

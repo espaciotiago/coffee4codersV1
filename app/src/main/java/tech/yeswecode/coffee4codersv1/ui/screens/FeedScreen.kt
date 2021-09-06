@@ -5,18 +5,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import tech.yeswecode.coffee4codersv1.models.Product
 import tech.yeswecode.coffee4codersv1.ui.components.*
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
-import tech.yeswecode.coffee4codersv1.viewModels.CountryISO
 import tech.yeswecode.coffee4codersv1.viewModels.FeedViewModel
 import tech.yeswecode.coffee4codersv1.viewModels.ProductViewModel
 
@@ -27,13 +23,7 @@ fun FeedScreen(navController: NavController, feedVM: FeedViewModel = FeedViewMod
     Scaffold(
         topBar = { CustomAppBar() }, content = {
             if(feed.value.isEmpty()){
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(32.dp)) {
-                    CircularProgressIndicator()
-                }
+                Loader()
             } else {
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
