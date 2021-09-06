@@ -14,8 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import tech.yeswecode.coffee4codersv1.ui.components.BodyText
 import tech.yeswecode.coffee4codersv1.ui.components.CountryISO
 import tech.yeswecode.coffee4codersv1.ui.components.ProductCard
+import tech.yeswecode.coffee4codersv1.ui.components.TitleText
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 
 @Composable
@@ -29,11 +31,8 @@ fun FeedScreen() {
             ) {
                 item {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Bienvenido",
-                            style = MaterialTheme.typography.h3)
-                        Text("Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.. Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.",
-                            style = MaterialTheme.typography.body2,
-                            textAlign = TextAlign.Justify)
+                        TitleText("Bienvenido")
+                        BodyText(body = "Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.. Lorem ipsum dolor sit amet consectetur adipiscing elit per, nullam semper nisl aliquet quisque curae vestibulum.")
                     }
                 }
                 items(list) { country ->
