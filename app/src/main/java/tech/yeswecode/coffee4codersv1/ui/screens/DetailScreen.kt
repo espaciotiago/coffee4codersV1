@@ -57,7 +57,7 @@ fun DetailScreen(navController: NavController, country: CountryISO) {
                         Text(
                             text = "$ 35.0 USD",
                             style = MaterialTheme.typography.h5,
-                            textAlign = TextAlign.End
+                            textAlign = TextAlign.Start
                         )
 
                         CustomButton(label = "Continuar") {
