@@ -18,10 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import tech.yeswecode.coffee4codersv1.ui.components.BodyText
-import tech.yeswecode.coffee4codersv1.ui.components.CountryISO
-import tech.yeswecode.coffee4codersv1.ui.components.CustomAppBar
-import tech.yeswecode.coffee4codersv1.ui.components.TitleText
+import tech.yeswecode.coffee4codersv1.ui.components.*
 
 @Composable
 fun DetailScreen(navController: NavController, country: CountryISO) {
@@ -62,19 +59,10 @@ fun DetailScreen(navController: NavController, country: CountryISO) {
                             textAlign = TextAlign.End
                         )
 
-                        Button(onClick = {
-                        },
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = MaterialTheme.shapes.large,
-                            colors = ButtonDefaults.buttonColors(
-                                backgroundColor = MaterialTheme.colors.secondary,
-                                contentColor = Color.White),
-                            elevation = ButtonDefaults.elevation(
-                                defaultElevation = 6.dp,
-                                pressedElevation = 8.dp,
-                                disabledElevation = 0.dp
-                            )) {
-                            Text(text = "CONTINUAR")
+                        CustomButton(label = "Continuar") {
+                            navController.navigate("checkout/${country.iso}") {
+                                launchSingleTop = true
+                            }
                         }
                     }
                 }
