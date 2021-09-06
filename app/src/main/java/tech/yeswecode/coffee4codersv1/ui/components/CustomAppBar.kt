@@ -1,20 +1,16 @@
 package tech.yeswecode.coffee4codersv1.ui.components
 
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
-import tech.yeswecode.coffee4codersv1.ui.theme.Purple700
 
 typealias NavigationAction = () -> Unit
 
 @Composable
 fun CustomAppBar(title: String? = null, navigationIcon: ImageVector? = null, navigationAction: NavigationAction? = null) {
 
-    val titleText = title ?: ""
+    val titleText = title ?: "Coffe4Coders"
     if (navigationIcon != null && navigationAction != null) {
         TopAppBar(
             title = { Text(text = titleText)},
@@ -23,12 +19,12 @@ fun CustomAppBar(title: String? = null, navigationIcon: ImageVector? = null, nav
                     Icon(navigationIcon,"")
                 }
             },
-            backgroundColor = Purple700
+            backgroundColor = MaterialTheme.colors.primary
         )
     } else {
         TopAppBar(
             title = { Text(text = titleText)},
-            backgroundColor = Purple700
+            backgroundColor = MaterialTheme.colors.primary
         )
     }
 }

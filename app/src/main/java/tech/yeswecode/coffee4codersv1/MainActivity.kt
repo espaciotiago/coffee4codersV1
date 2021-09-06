@@ -32,7 +32,7 @@ fun NavigationHost() {
                 composable("detail/{countryIso}") { backStackEntry ->
                     val countryIsoString = backStackEntry.arguments?.getString("countryIso") ?: "COL"
                     val countryIso = CountryISO.valueOf(countryIsoString)
-                    DetailScreen(navController = navController, countryIso = countryIso)
+                    DetailScreen(navController = navController, country = countryIso)
                 }
             }
         }
