@@ -1,6 +1,5 @@
 package tech.yeswecode.coffee4codersv1.ui.components
 
-import tech.yeswecode.coffee4codersv1.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,48 +10,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
-import tech.yeswecode.coffee4codersv1.ui.theme.PlatziBlue
-import tech.yeswecode.coffee4codersv1.ui.theme.PlatziGreen
-
-typealias SelectionAction = () -> Unit
-
-enum class CountryISO(val iso: String) {
-    COL("COL"),
-    BRA("BRA"),
-    CRI("CRI"),
-    NIC("NIC");
-
-    fun getBackgroundImage(): Int {
-        when (this) {
-            COL -> return R.drawable.co
-            BRA -> return R.drawable.br
-            CRI -> return R.drawable.ri
-            NIC -> return R.drawable.ni
-        }
-    }
-
-    fun getCountryFlag(): Int {
-        when (this) {
-            COL -> return R.drawable.flagco
-            BRA -> return R.drawable.flagbr
-            CRI -> return R.drawable.flagri
-            NIC -> return R.drawable.flagni
-        }
-    }
-
-    fun getSurfaceColor(): Color {
-        when (this) {
-            COL, NIC -> return PlatziBlue
-            BRA, CRI -> return PlatziGreen
-        }
-    }
-}
+import tech.yeswecode.coffee4codersv1.viewModels.CountryISO
+import tech.yeswecode.coffee4codersv1.viewModels.SelectionAction
 
 @Composable
 fun ProductCard(name: String,
