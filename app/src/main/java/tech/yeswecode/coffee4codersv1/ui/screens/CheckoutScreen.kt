@@ -14,12 +14,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import tech.yeswecode.coffee4codersv1.models.Product
 import tech.yeswecode.coffee4codersv1.ui.components.*
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
+import tech.yeswecode.coffee4codersv1.viewModels.CountryISO
+import tech.yeswecode.coffee4codersv1.viewModels.ProductViewModel
 
 @Composable
 fun CheckoutScreen(navController: NavController, country: CountryISO) {
 
+    val product = Product.list()[0]
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
@@ -46,13 +50,7 @@ fun CheckoutScreen(navController: NavController, country: CountryISO) {
             onBackPressed()
         } }, content = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                ProductCard(
-                    name = "Café de Colombia",
-                    summary = "Café de origen de las montañas colombianas.",
-                    price = 35.0,
-                    currency = "USD",
-                    country = CountryISO.COL
-                ) {}
+                ProductCard(productVM = ProductViewModel(product = product)) {}
 
                 Column(modifier = Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)) {

@@ -14,16 +14,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import tech.yeswecode.coffee4codersv1.models.Product
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
-import tech.yeswecode.coffee4codersv1.viewModels.CountryISO
+import tech.yeswecode.coffee4codersv1.viewModels.ProductViewModel
 import tech.yeswecode.coffee4codersv1.viewModels.SelectionAction
 
 @Composable
-fun ProductCard(name: String,
-                summary: String,
-                price: Double,
-                currency: String,
-                country: CountryISO,
+fun ProductCard(productVM: ProductViewModel,
                 selected: SelectionAction) {
 
     Card(modifier = Modifier
@@ -37,11 +34,11 @@ fun ProductCard(name: String,
         elevation = 10.dp,
     ) {
         Image(
-            painter = painterResource(id = country.getBackgroundImage()),
+            painter = painterResource(id = productVM.getCountry().getBackgroundImage()),
             contentDescription = null
         )
         Surface(
-            color = country.getSurfaceColor().copy(alpha = 0.2f),
+            color = productVM.getCountry().getSurfaceColor().copy(alpha = 0.2f),
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -49,12 +46,12 @@ fun ProductCard(name: String,
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = name,
+                    text = productVM.getName(),
                     style = MaterialTheme.typography.h4,
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    text = summary,
+                    text = productVM.getSummary(),
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center
                 )
@@ -63,12 +60,12 @@ fun ProductCard(name: String,
                     verticalArrangement = Arrangement.Bottom
                 ) {
                     Row(){
-                        Image(painter = painterResource(id = country.getCountryFlag()),
+                        Image(painter = painterResource(id = productVM.getCountry().getCountryFlag()),
                             contentDescription = null,
                             modifier = Modifier.size(32.dp, 32.dp))
                         Text(
                             modifier = Modifier.fillMaxWidth(),
-                            text = "$ $price $currency",
+                            text = "$ ${productVM.getPrice()} ${productVM.getCurrency()}",
                             style = MaterialTheme.typography.h4,
                             textAlign = TextAlign.End
                         )
@@ -82,11 +79,10 @@ fun ProductCard(name: String,
 @Preview(showBackground = true)
 @Composable
 fun ProductCardPreview() {
+
+    val product = Product.list()[0]
+
     Coffee4Codersv1Theme {
-        ProductCard(name = "Café de Nicaragua",
-            summary = "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
-            price = 35.0,
-            currency = "USD",
-            country = CountryISO.NIC) {}
+        ProductCard(ProductViewModel(product = product)) {}
     }
 }

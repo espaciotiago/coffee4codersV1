@@ -12,11 +12,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import tech.yeswecode.coffee4codersv1.models.Product
 import tech.yeswecode.coffee4codersv1.ui.components.*
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
+import tech.yeswecode.coffee4codersv1.viewModels.CountryISO
+import tech.yeswecode.coffee4codersv1.viewModels.ProductViewModel
 
 @Composable
 fun FeedScreen(navController: NavController) {
+    val product = Product.list()[0]
     val list = listOf<CountryISO>(CountryISO.COL, CountryISO.CRI, CountryISO.NIC, CountryISO.BRA)
 
     Scaffold(
@@ -31,11 +35,7 @@ fun FeedScreen(navController: NavController) {
                     }
                 }
                 items(list) { country ->
-                    ProductCard(name = "Café de Colombia",
-                        summary = "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
-                        price = 35.0,
-                        currency = "USD",
-                        country = country) {
+                    ProductCard(ProductViewModel(product)) {
                         navController.navigate("detail/${country.iso}") {
                             launchSingleTop = true
                         }
