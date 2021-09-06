@@ -4,6 +4,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 
 typealias NavigationAction = () -> Unit
 
@@ -34,5 +35,7 @@ fun CustomAppBar(title: String? = null, navigationIcon: ImageVector? = null, nav
 )
 @Composable
 fun CustomAppBarPreview() {
-    CustomAppBar()
+    Coffee4Codersv1Theme {
+        CustomAppBar()
+    }
 }

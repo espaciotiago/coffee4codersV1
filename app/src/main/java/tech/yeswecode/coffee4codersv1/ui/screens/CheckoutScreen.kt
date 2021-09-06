@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import tech.yeswecode.coffee4codersv1.ui.components.*
+import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 
 @Composable
 fun CheckoutScreen(navController: NavController, country: CountryISO) {
@@ -35,5 +36,7 @@ fun CheckoutScreen(navController: NavController, country: CountryISO) {
 @Composable
 fun CheckoutScreenPreview() {
     val navController = rememberNavController()
-    CheckoutScreen(navController = navController, country = CountryISO.COL)
+    Coffee4Codersv1Theme {
+        CheckoutScreen(navController = navController, country = CountryISO.COL)
+    }
 }

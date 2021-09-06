@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import tech.yeswecode.coffee4codersv1.ui.components.*
+import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 
 @Composable
 fun FeedScreen(navController: NavController) {
@@ -48,5 +49,7 @@ fun FeedScreen(navController: NavController) {
 @Composable
 fun FeedScreenPreview() {
     val navController = rememberNavController()
-    FeedScreen(navController = navController)
+    Coffee4Codersv1Theme {
+        FeedScreen(navController = navController)
+    }
 }

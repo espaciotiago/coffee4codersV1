@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import tech.yeswecode.coffee4codersv1.ui.components.*
+import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 
 @Composable
 fun DetailScreen(navController: NavController, country: CountryISO) {
@@ -76,5 +77,7 @@ fun DetailScreen(navController: NavController, country: CountryISO) {
 @Composable
 fun DetailScreenPreview() {
     val navController = rememberNavController()
-    DetailScreen(navController = navController, country = CountryISO.COL)
+    Coffee4Codersv1Theme {
+        DetailScreen(navController = navController, country = CountryISO.COL)
+    }
 }

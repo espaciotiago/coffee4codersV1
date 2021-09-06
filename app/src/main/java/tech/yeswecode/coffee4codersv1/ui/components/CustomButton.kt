@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 
 typealias ButtonAction = () -> Unit
 
@@ -42,7 +43,9 @@ fun CustomButton(label: String, action: ButtonAction) {
 )
 @Composable
 fun CustomButtonPreview() {
-    Box(Modifier.padding(16.dp)) {
-        CustomButton("Continuar") {}
+    Coffee4Codersv1Theme {
+        Box(Modifier.padding(16.dp)) {
+            CustomButton("Continuar") {}
+        }
     }
 }

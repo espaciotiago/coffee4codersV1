@@ -4,6 +4,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 
 @Composable
 fun TitleText(title: String){
@@ -16,5 +17,7 @@ fun TitleText(title: String){
 )
 @Composable
 fun TitleTextPreview() {
-    TitleText("Titulo")
+    Coffee4Codersv1Theme {
+        TitleText("Titulo")
+    }
 }
