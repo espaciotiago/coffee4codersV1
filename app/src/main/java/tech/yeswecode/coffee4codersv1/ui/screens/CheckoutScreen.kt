@@ -26,6 +26,7 @@ import tech.yeswecode.coffee4codersv1.viewModels.ProductViewModel
 fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) {
     val emptyProduct = Product(0,"","","",0.0,"","COL")
     val product = checkoutVM.productVM.observeAsState(ProductViewModel(product = emptyProduct))
+    val cities = checkoutVM.cities.observeAsState(ArrayList())
     val loading = checkoutVM.loading.observeAsState(false)
 
     var name by remember { mutableStateOf("") }
@@ -33,17 +34,6 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
     var phone by remember { mutableStateOf("") }
     var city by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
-    val cities = listOf(
-        "Ciudad de México, México",
-        "La Habana, Cuba",
-        "Cancún, México",
-        "Medellín, Colombia",
-        "Buenos Aires, Argentina",
-        "Sao Paulo, Brasil",
-        "Lima, Perú",
-        "Montevideo, Uruguay",
-        "Ciudad de Panamá, Panamá"
-    )
 
     fun onBackPressed() {
         navController.navigate("detail/${product.value.getId()}")
@@ -76,7 +66,7 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
                         CustomTextField(address, "Dirección") {
                             address = it
                         }
-                        DropdownTextField(cities, city, "Ciudad") {
+                        DropdownTextField(cities.value, city, "Ciudad") {
                             city = it
                         }
 
