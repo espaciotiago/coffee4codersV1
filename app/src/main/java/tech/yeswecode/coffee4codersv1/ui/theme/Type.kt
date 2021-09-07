@@ -53,17 +53,35 @@ val TypographyDark = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         color = Color.White
-    )
-    /* Other default text styles to override
-    button = TextStyle(
+    ),
+    h5 = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
-        fontSize = 14.sp
+        fontWeight = FontWeight.Normal,
+        fontSize = 24.sp,
+        color = Color.White
+    ),
+    h4 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+        color = Color.White
+    ),
+    h3 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+        fontSize = 32.sp,
+        color = Color.White
+    ),
+    body2 = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        color = FontDark
     ),
     caption = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        fontSize = 12.sp,
+        color = PlaceholderDark
     )
-    */
 )
