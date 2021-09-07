@@ -32,7 +32,7 @@ fun NavigationHost() {
             NavHost(navController = navController, startDestination = "feed") {
                 composable("feed") { FeedScreen(navController = navController) }
                 composable("detail/{productId}") { backStackEntry ->
-                    val productIdString = backStackEntry.arguments?.getString("countryIso") ?: "0"
+                    val productIdString = backStackEntry.arguments?.getString("productId") ?: "0"
                     val productId = productIdString.toInt()
                     DetailScreen(navController = navController, detailVM = DetailViewModel(productId = productId))
                 }
