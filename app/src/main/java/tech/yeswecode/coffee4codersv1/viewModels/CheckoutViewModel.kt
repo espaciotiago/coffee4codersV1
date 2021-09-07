@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tech.yeswecode.coffee4codersv1.models.Product
 
-class DetailViewModel(productId: Int) {
+class CheckoutViewModel(productId: Int) {
 
     private val emptyProduct = Product(0,"","","",0.0,"","COL")
     private val _productVM = MutableLiveData(ProductViewModel(product = emptyProduct))

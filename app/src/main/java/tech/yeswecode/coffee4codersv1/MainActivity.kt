@@ -14,6 +14,7 @@ import tech.yeswecode.coffee4codersv1.ui.screens.CheckoutScreen
 import tech.yeswecode.coffee4codersv1.ui.screens.DetailScreen
 import tech.yeswecode.coffee4codersv1.ui.screens.FeedScreen
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
+import tech.yeswecode.coffee4codersv1.viewModels.CheckoutViewModel
 import tech.yeswecode.coffee4codersv1.viewModels.CountryISO
 import tech.yeswecode.coffee4codersv1.viewModels.DetailViewModel
 
@@ -36,10 +37,10 @@ fun NavigationHost() {
                     val productId = productIdString.toInt()
                     DetailScreen(navController = navController, detailVM = DetailViewModel(productId = productId))
                 }
-                composable("checkout/{countryIso}") { backStackEntry ->
-                    val countryIsoString = backStackEntry.arguments?.getString("countryIso") ?: "COL"
-                    val countryIso = CountryISO.valueOf(countryIsoString)
-                    CheckoutScreen(navController = navController, country = countryIso)
+                composable("checkout/{productId}") { backStackEntry ->
+                    val productIdString = backStackEntry.arguments?.getString("productId") ?: "0"
+                    val productId = productIdString.toInt()
+                    CheckoutScreen(navController = navController, checkoutVM = CheckoutViewModel(productId = productId))
                 }
             }
         }

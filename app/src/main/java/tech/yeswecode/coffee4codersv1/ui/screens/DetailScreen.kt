@@ -75,7 +75,7 @@ fun DetailScreen(navController: NavController, detailVM: DetailViewModel) {
                             )
 
                             CustomButton(label = "Continuar") {
-                                navController.navigate("checkout/${product.value.getCountry().iso}") {
+                                navController.navigate("checkout/${product.value.getId()}") {
                                     launchSingleTop = true
                                 }
                             }
