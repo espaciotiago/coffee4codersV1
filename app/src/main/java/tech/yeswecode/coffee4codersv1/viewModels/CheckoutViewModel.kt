@@ -3,6 +3,7 @@ package tech.yeswecode.coffee4codersv1.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tech.yeswecode.coffee4codersv1.models.Product
+import tech.yeswecode.coffee4codersv1.models.Purchase
 import tech.yeswecode.coffee4codersv1.services.NetworkingInterface
 import tech.yeswecode.coffee4codersv1.services.NetworkingMockService
 
@@ -68,7 +69,31 @@ class CheckoutViewModel(productId: Int, service: NetworkingInterface = Networkin
     fun completePurchase() {
         val (canContinue, message) = validateFields()
         when {
-            canContinue -> _successMessage.value = "Pedido realizado existosamente."
+            canContinue -> {
+                val nameStr = _name.value!!
+                val emailStr = _email.value!!
+                val phoneStr = _phone.value!!
+                val addressStr = _address.value!!
+                val cityStr = _city.value!!
+                val purchase = _productVM.value?.let {
+                    Purchase(
+                        it.product,
+                        name = nameStr,
+                        email = emailStr,
+                        phone = phoneStr,
+                        address = addressStr,
+                        city = cityStr)
+                }
+                purchase?.let {
+                    service.doPurchase(purchase = it){ ok, error ->
+                        if (error != null) {
+                            _errorMessage.value = error
+                        } else {
+                            _successMessage.value = ok
+                        }
+                    }
+                }
+            }
             else -> _errorMessage.value = message ?: "Lo sentimos, ha ocurrido un error."
         }
     }
