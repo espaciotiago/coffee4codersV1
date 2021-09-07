@@ -1,13 +1,14 @@
 package tech.yeswecode.coffee4codersv1.viewModels
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tech.yeswecode.coffee4codersv1.models.Product
-import tech.yeswecode.coffee4codersv1.models.Purchase
+import tech.yeswecode.coffee4codersv1.services.NetworkingInterface
+import tech.yeswecode.coffee4codersv1.services.NetworkingMockService
 
-class CheckoutViewModel(productId: Int) {
+class CheckoutViewModel(productId: Int, service: NetworkingInterface = NetworkingMockService()) {
+
+    private val service: NetworkingInterface = service
 
     private val emptyProduct = Product(0,"","","",0.0,"","COL")
     private val _productVM = MutableLiveData(ProductViewModel(product = emptyProduct))
@@ -83,19 +84,19 @@ class CheckoutViewModel(productId: Int) {
         val addressStr = _address.value
         val cityStr = _city.value
         when {
-            nameStr == null || nameStr!!.isEmpty() -> {
+            nameStr == null || nameStr.isEmpty() -> {
                 return Pair(false, "Por favor ingrese el nombre del comprador.")
             }
-            emailStr == null || emailStr!!.isEmpty() -> {
+            emailStr == null || emailStr.isEmpty() -> {
                 return Pair(false, "Por favor ingrese el email del comprador.")
             }
-            phoneStr == null || phoneStr!!.isEmpty() -> {
+            phoneStr == null || phoneStr.isEmpty() -> {
                 return Pair(false, "Por favor ingrese el télefono de contacto del comprador.")
             }
-            addressStr == null || addressStr!!.isEmpty() -> {
+            addressStr == null || addressStr.isEmpty() -> {
                 return Pair(false, "Por favor ingrese la dirección de envío.")
             }
-            cityStr == null || cityStr!!.isEmpty() -> {
+            cityStr == null || cityStr.isEmpty() -> {
                 return Pair(false, "Por favor ingrese la ciudad de envío.")
             }
         }
@@ -103,24 +104,25 @@ class CheckoutViewModel(productId: Int) {
     }
 
     private fun getCities(completion: (Boolean) -> Unit) {
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                _cities.value = Purchase.cities().map { it } as ArrayList<String>
-                completion(true)
-            }, 500)
+        service.loadCities { cities, _ ->
+            _cities.value = cities?.map { it } as ArrayList<String>
+            completion(true)
+        }
     }
 
     private fun getProduct(byId: Int) {
         _loading.value = true
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                val productSelected = Product.list().find { it.id == byId }
-                _productVM.value = productSelected?.let { ProductViewModel(product = it) }
+        service.getProduct(byId) { product, error ->
+            if(error != null) {
+                _errorMessage.value = error!!
+            } else {
+                _productVM.value = product?.let { ProductViewModel(product = it) }
                 getCities {
                     if(it) {
                         _loading.value = false
                     }
                 }
-            }, 500)
+            }
+        }
     }
 }
