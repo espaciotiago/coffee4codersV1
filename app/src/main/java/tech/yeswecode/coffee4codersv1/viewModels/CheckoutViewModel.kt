@@ -58,6 +58,25 @@ class CheckoutViewModel(productId: Int) {
         _address.value = address
     }
 
+    fun completePurchase() {
+        val (canContinue, message) = validateFields()
+        when {
+            canContinue -> {
+                //TODO: Success flow
+            }
+            message != null -> {
+                //TODO: Show error message
+            }
+            else -> {
+                //TODO: Show generic error
+            }
+        }
+    }
+
+    private fun validateFields(): Pair<Boolean,String?> {
+        return Pair(false, "Mensaje de error")
+    }
+
     private fun getCities(completion: (Boolean) -> Unit) {
         Handler(Looper.getMainLooper()).postDelayed(
             {
