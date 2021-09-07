@@ -28,12 +28,12 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
     val product = checkoutVM.productVM.observeAsState(ProductViewModel(product = emptyProduct))
     val cities = checkoutVM.cities.observeAsState(ArrayList())
     val loading = checkoutVM.loading.observeAsState(false)
-
-    var name by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var phone by remember { mutableStateOf("") }
-    var city by remember { mutableStateOf("") }
-    var address by remember { mutableStateOf("") }
+    val name = checkoutVM.name.observeAsState("")
+    val email = checkoutVM.email.observeAsState("")
+    val phone = checkoutVM.phone.observeAsState("")
+    val city = checkoutVM.city.observeAsState("")
+    val address = checkoutVM.address.observeAsState("")
+    val shippingFee = 10.0
 
     fun onBackPressed() {
         navController.navigate("detail/${product.value.getId()}")
@@ -54,27 +54,27 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
 
-                        CustomTextField(name, "Nombre del comprador") {
-                            name = it
+                        CustomTextField(name.value, "Nombre del comprador") {
+                            checkoutVM.setName(it)
                         }
-                        CustomTextField(email, "Correo electrónico") {
-                            email = it
+                        CustomTextField(email.value, "Correo electrónico") {
+                            checkoutVM.setEmail(it)
                         }
-                        CustomTextField(phone, "Número telefónico") {
-                            phone = it
+                        CustomTextField(phone.value, "Número telefónico") {
+                            checkoutVM.setPhone(it)
                         }
-                        CustomTextField(address, "Dirección") {
-                            address = it
+                        CustomTextField(address.value, "Dirección") {
+                            checkoutVM.setAddress(it)
                         }
-                        DropdownTextField(cities.value, city, "Ciudad") {
-                            city = it
+                        DropdownTextField(cities.value, city.value, "Ciudad") {
+                            checkoutVM.setCity(it)
                         }
 
                         Column {
                             Row {
                                 Text(text = "Subtotal", style = MaterialTheme.typography.caption)
                                 Text(
-                                    text = "$ 35.0 USD",
+                                    text = "$ ${product.value.getPrice()} ${product.value.getCurrency()}",
                                     style = MaterialTheme.typography.body2,
                                     textAlign = TextAlign.End,
                                     modifier = Modifier.fillMaxWidth()
@@ -83,7 +83,7 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
                             Row {
                                 Text(text = "Envio", style = MaterialTheme.typography.caption)
                                 Text(
-                                    text = "$ 10.0 USD",
+                                    text = "$ $shippingFee USD",
                                     style = MaterialTheme.typography.body2,
                                     textAlign = TextAlign.End,
                                     modifier = Modifier.fillMaxWidth()
@@ -93,15 +93,12 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
 
                         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                             Text(
-                                text = "$ 45.0 USD",
+                                text = "$ ${product.value.getPrice() + shippingFee} ${product.value.getCurrency()}",
                                 style = MaterialTheme.typography.h5,
                                 textAlign = TextAlign.Start
                             )
                             CustomButton(label = "Finalizar pedido") {
-                                Log.d(
-                                    "Finalizar pedido con:",
-                                    "$name, $email, $phone, $address, $city"
-                                )
+
                             }
                         }
                     }
