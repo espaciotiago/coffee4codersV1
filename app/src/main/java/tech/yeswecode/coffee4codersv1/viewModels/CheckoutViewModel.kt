@@ -34,6 +34,9 @@ class CheckoutViewModel(productId: Int) {
     private val _errorMessage = MutableLiveData<String?>(null)
     val errorMessage: LiveData<String?> = _errorMessage
 
+    private val _successMessage = MutableLiveData<String?>(null)
+    val successMessage: LiveData<String?> = _successMessage
+
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
@@ -61,10 +64,10 @@ class CheckoutViewModel(productId: Int) {
         _address.value = address
     }
 
-    fun completePurchase(completion: () -> Unit) {
+    fun completePurchase() {
         val (canContinue, message) = validateFields()
         when {
-            canContinue -> completion()
+            canContinue -> _successMessage.value = "Pedido realizado existosamente."
             else -> _errorMessage.value = message ?: "Lo sentimos, ha ocurrido un error."
         }
     }

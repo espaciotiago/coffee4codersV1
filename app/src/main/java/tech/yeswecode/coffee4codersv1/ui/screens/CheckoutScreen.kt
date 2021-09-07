@@ -34,6 +34,7 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
     val city = checkoutVM.city.observeAsState("")
     val address = checkoutVM.address.observeAsState("")
     val errorMessage = checkoutVM.errorMessage.observeAsState(null)
+    val successMessage = checkoutVM.successMessage.observeAsState(null)
     val shippingFee = 10.0
 
     fun onBackPressed() {
@@ -47,8 +48,15 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
             if(loading.value){
                 Loader()
             } else {
-                ErrorAlertDialog(errorMessage = errorMessage.value) {
+                Alert(title= "Ups", message = errorMessage.value) {
                     checkoutVM.removeError()
+                }
+                Alert(title= "¡Felicidades!", message = successMessage.value) {
+                    checkoutVM.removeError()
+                    navController.navigate("feed") {
+                        launchSingleTop = true
+                        popUpTo("feed")
+                    }
                 }
                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                     ProductCard(productVM = product.value) {}
@@ -102,12 +110,7 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
                                 textAlign = TextAlign.Start
                             )
                             CustomButton(label = "Finalizar pedido") {
-                                checkoutVM.completePurchase {
-                                    navController.navigate("feed") {
-                                        launchSingleTop = true
-                                        popUpTo("feed")
-                                    }
-                                }
+                                checkoutVM.completePurchase()
                             }
                         }
                     }
@@ -117,12 +120,12 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
 }
 
 @Composable
-fun ErrorAlertDialog(errorMessage: String?, onClose: () -> Unit) {
-    if(errorMessage != null) {
+fun Alert(title: String = "", message: String?, onClose: () -> Unit) {
+    if(message != null) {
         AlertDialog(
             onDismissRequest = { onClose() },
-            title = { Text(text = "Ups!", style = TextStyle(color = Color.Black)) },
-            text = { Text(text = errorMessage) },
+            title = { Text(text = title, style = TextStyle(color = Color.Black)) },
+            text = { Text(text = message) },
             confirmButton = {
                 Button(
                     onClick = {
