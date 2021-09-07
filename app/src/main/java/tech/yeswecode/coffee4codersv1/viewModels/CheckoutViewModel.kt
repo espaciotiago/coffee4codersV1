@@ -5,20 +5,7 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tech.yeswecode.coffee4codersv1.models.Product
-
-private fun cities(): List<String> {
-    return listOf(
-        "Ciudad de México, México",
-        "La Habana, Cuba",
-        "Cancún, México",
-        "Medellín, Colombia",
-        "Buenos Aires, Argentina",
-        "Sao Paulo, Brasil",
-        "Lima, Perú",
-        "Montevideo, Uruguay",
-        "Ciudad de Panamá, Panamá"
-    )
-}
+import tech.yeswecode.coffee4codersv1.models.Purchase
 
 class CheckoutViewModel(productId: Int) {
 
@@ -39,7 +26,7 @@ class CheckoutViewModel(productId: Int) {
     private fun getCities(completion: (Boolean) -> Unit) {
         Handler(Looper.getMainLooper()).postDelayed(
             {
-                _cities.value = cities().map { it } as ArrayList<String>
+                _cities.value = Purchase.cities().map { it } as ArrayList<String>
                 completion(true)
             }, 500)
     }

@@ -7,4 +7,20 @@ class Purchase(product: Product, name: String, email: String, phone: String, add
     val phone = phone
     val address = address
     val city = city
+
+    companion object {
+        fun cities(): List<String> {
+            return listOf(
+                "Ciudad de México, México",
+                "La Habana, Cuba",
+                "Cancún, México",
+                "Medellín, Colombia",
+                "Buenos Aires, Argentina",
+                "Sao Paulo, Brasil",
+                "Lima, Perú",
+                "Montevideo, Uruguay",
+                "Ciudad de Panamá, Panamá"
+            )
+        }
+    }
 }
