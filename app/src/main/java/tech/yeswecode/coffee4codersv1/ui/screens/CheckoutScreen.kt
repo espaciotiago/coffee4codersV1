@@ -1,6 +1,5 @@
 package tech.yeswecode.coffee4codersv1.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -10,6 +9,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,7 +20,6 @@ import tech.yeswecode.coffee4codersv1.models.Product
 import tech.yeswecode.coffee4codersv1.ui.components.*
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 import tech.yeswecode.coffee4codersv1.viewModels.CheckoutViewModel
-import tech.yeswecode.coffee4codersv1.viewModels.CountryISO
 import tech.yeswecode.coffee4codersv1.viewModels.ProductViewModel
 
 @Composable
@@ -33,6 +33,7 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
     val phone = checkoutVM.phone.observeAsState("")
     val city = checkoutVM.city.observeAsState("")
     val address = checkoutVM.address.observeAsState("")
+    val errorMessage = checkoutVM.errorMessage.observeAsState(null)
     val shippingFee = 10.0
 
     fun onBackPressed() {
@@ -46,6 +47,9 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
             if(loading.value){
                 Loader()
             } else {
+                ErrorAlertDialog(errorMessage = errorMessage.value) {
+                    checkoutVM.removeError()
+                }
                 Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                     ProductCard(productVM = product.value) {}
 
@@ -98,13 +102,37 @@ fun CheckoutScreen(navController: NavController, checkoutVM: CheckoutViewModel) 
                                 textAlign = TextAlign.Start
                             )
                             CustomButton(label = "Finalizar pedido") {
-
+                                checkoutVM.completePurchase {
+                                    navController.navigate("feed") {
+                                        launchSingleTop = true
+                                        popUpTo("feed")
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         })
+}
+
+@Composable
+fun ErrorAlertDialog(errorMessage: String?, onClose: () -> Unit) {
+    if(errorMessage != null) {
+        AlertDialog(
+            onDismissRequest = { onClose() },
+            title = { Text(text = "Ups!", style = TextStyle(color = Color.Black)) },
+            text = { Text(text = errorMessage) },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        onClose()
+                    }) {
+                    Text("Ok")
+                }
+            },
+        )
+    }
 }
 
 @Preview(

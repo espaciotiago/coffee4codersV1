@@ -31,6 +31,9 @@ class CheckoutViewModel(productId: Int) {
     private val _city = MutableLiveData("")
     val city: LiveData<String> = _city
 
+    private val _errorMessage = MutableLiveData<String?>(null)
+    val errorMessage: LiveData<String?> = _errorMessage
+
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
@@ -58,23 +61,42 @@ class CheckoutViewModel(productId: Int) {
         _address.value = address
     }
 
-    fun completePurchase() {
+    fun completePurchase(completion: () -> Unit) {
         val (canContinue, message) = validateFields()
         when {
-            canContinue -> {
-                //TODO: Success flow
-            }
-            message != null -> {
-                //TODO: Show error message
-            }
-            else -> {
-                //TODO: Show generic error
-            }
+            canContinue -> completion()
+            else -> _errorMessage.value = message ?: "Lo sentimos, ha ocurrido un error."
         }
     }
 
+    fun removeError() {
+        _errorMessage.value = null
+    }
+
     private fun validateFields(): Pair<Boolean,String?> {
-        return Pair(false, "Mensaje de error")
+        val nameStr = _name.value
+        val emailStr = _email.value
+        val phoneStr = _phone.value
+        val addressStr = _address.value
+        val cityStr = _city.value
+        when {
+            nameStr == null || nameStr!!.isEmpty() -> {
+                return Pair(false, "Por favor ingrese el nombre del comprador.")
+            }
+            emailStr == null || emailStr!!.isEmpty() -> {
+                return Pair(false, "Por favor ingrese el email del comprador.")
+            }
+            phoneStr == null || phoneStr!!.isEmpty() -> {
+                return Pair(false, "Por favor ingrese el télefono de contacto del comprador.")
+            }
+            addressStr == null || addressStr!!.isEmpty() -> {
+                return Pair(false, "Por favor ingrese la dirección de envío.")
+            }
+            cityStr == null || cityStr!!.isEmpty() -> {
+                return Pair(false, "Por favor ingrese la ciudad de envío.")
+            }
+        }
+        return Pair(true, null)
     }
 
     private fun getCities(completion: (Boolean) -> Unit) {
