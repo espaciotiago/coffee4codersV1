@@ -30,25 +30,13 @@ fun FeedScreen(navController: NavController, feedVM: FeedViewModel = FeedViewMod
                     Loader()
                 }
                 error.value != null -> {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(32.dp)) {
-                        Text(text = error.value!!, style = MaterialTheme.typography.body2, modifier = Modifier.padding(bottom = 16.dp))
-                        CustomButton(label = "Volver a intentar") {
-                            feedVM.loadFeed()
-                        }
+                    ErrorView(errorMessage = error.value!!) {
+                        feedVM.loadFeed()
                     }
                 }
                 feed.value.isEmpty() -> {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(32.dp)) {
-                        Text(text = "No hay datos para mostrar", style = MaterialTheme.typography.body2, modifier = Modifier.padding(bottom = 16.dp))
-                        CustomButton(label = "Refrescar") {
-                            feedVM.loadFeed()
-                        }
+                    EmptyView {
+                        feedVM.loadFeed()
                     }
                 }
                 else -> {

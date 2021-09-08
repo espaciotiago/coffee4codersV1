@@ -10,8 +10,7 @@ class NetworkingMockService: NetworkingInterface {
     override fun loadFeed(completion: (feed: List<Product>?, error: String?) -> Unit) {
         Handler(Looper.getMainLooper()).postDelayed(
             {
-                //completion(MockData.listOfProducts(), null)
-                completion(ArrayList(), null)
+                completion(MockData.listOfProducts(), null)
             }, 1000)
     }
 
