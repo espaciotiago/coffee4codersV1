@@ -28,6 +28,7 @@ fun DetailScreen(navController: NavController, detailVM: DetailViewModel) {
     val emptyProduct = Product(0,"","","",0.0,"","COL")
     val product = detailVM.productVM.observeAsState(ProductViewModel(product = emptyProduct))
     val loading = detailVM.loading.observeAsState(false)
+    val error = detailVM.errorMessage.observeAsState(null)
 
     fun onBackPressed() {
         navController.navigate("feed") {
@@ -39,44 +40,52 @@ fun DetailScreen(navController: NavController, detailVM: DetailViewModel) {
         topBar = { CustomAppBar(navigationIcon = Icons.Filled.ArrowBack) {
             onBackPressed()
         } }, content = {
-            if(loading.value){
-                Loader()
-            } else {
-                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(400.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(
-                                id = product.value.getCountry().getBackgroundImage()
-                            ),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
-                        )
+            when {
+                loading.value -> {
+                    Loader()
+                }
+                error.value != null -> {
+                    ErrorView(errorMessage = error.value!!) {
+                        detailVM.getProduct()
                     }
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        TitleText(title = product.value.getName())
-                        Text(
-                            product.value.getSummary(),
-                            style = MaterialTheme.typography.caption
-                        )
-                        Spacer(modifier = Modifier.height(24.dp))
-                        BodyText(body = product.value.getDescription())
-                        Spacer(modifier = Modifier.height(24.dp))
-                        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-
-                            Text(
-                                text = "$ ${product.value.getPrice()} ${product.value.getCurrency()}",
-                                style = MaterialTheme.typography.h5,
-                                textAlign = TextAlign.Start
+                }
+                else -> {
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(400.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(
+                                    id = product.value.getCountry().getBackgroundImage()
+                                ),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
                             )
+                        }
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            TitleText(title = product.value.getName())
+                            Text(
+                                product.value.getSummary(),
+                                style = MaterialTheme.typography.caption
+                            )
+                            Spacer(modifier = Modifier.height(24.dp))
+                            BodyText(body = product.value.getDescription())
+                            Spacer(modifier = Modifier.height(24.dp))
+                            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
 
-                            CustomButton(label = "Continuar") {
-                                navController.navigate("checkout/${product.value.getId()}") {
-                                    launchSingleTop = true
+                                Text(
+                                    text = "$ ${product.value.getPrice()} ${product.value.getCurrency()}",
+                                    style = MaterialTheme.typography.h5,
+                                    textAlign = TextAlign.Start
+                                )
+
+                                CustomButton(label = "Continuar") {
+                                    navController.navigate("checkout/${product.value.getId()}") {
+                                        launchSingleTop = true
+                                    }
                                 }
                             }
                         }
