@@ -14,45 +14,4 @@ class Product constructor(id: Int,
     val price: Double = price
     val currency: String = currency
     val countryISO: String = countryISO
-
-    companion object {
-        fun list(): List<Product> {
-            return listOf(
-                Product(
-                    0, "Café de Colombia",
-                    "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
-                    "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
-                    35.0,
-                    "USD",
-                    "COL"
-                ),
-                Product(
-                    1, "Café de Costa Rica",
-                    "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
-                    "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
-                    40.0,
-                    "USD",
-                    "CRI"
-                ),
-                Product(
-                    2,
-                    "Café de Nicaragua",
-                    "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
-                    "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
-                    30.0,
-                    "USD",
-                    "NIC"
-                ),
-                Product(
-                    3,
-                    "Café de Brazil",
-                    "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
-                    "Nuestro esfuerzo y trabajo conjunto representa el sueño de amor por las montañas de nuestro país.",
-                    45.0,
-                    "USD",
-                    "BRA"
-                )
-            )
-        }
-    }
 }

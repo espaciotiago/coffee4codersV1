@@ -14,10 +14,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import tech.yeswecode.coffee4codersv1.models.Product
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
+import tech.yeswecode.coffee4codersv1.utilities.MockData
 import tech.yeswecode.coffee4codersv1.viewModels.ProductViewModel
-import tech.yeswecode.coffee4codersv1.viewModels.SelectionAction
+import tech.yeswecode.coffee4codersv1.utilities.SelectionAction
 
 @Composable
 fun ProductCard(productVM: ProductViewModel,
@@ -80,7 +80,7 @@ fun ProductCard(productVM: ProductViewModel,
 @Composable
 fun ProductCardPreview() {
 
-    val product = Product.list()[0]
+    val product = MockData.listOfProducts()[0]
 
     Coffee4Codersv1Theme {
         ProductCard(ProductViewModel(product = product)) {}

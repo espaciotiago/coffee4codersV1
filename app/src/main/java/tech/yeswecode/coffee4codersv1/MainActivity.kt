@@ -15,7 +15,6 @@ import tech.yeswecode.coffee4codersv1.ui.screens.DetailScreen
 import tech.yeswecode.coffee4codersv1.ui.screens.FeedScreen
 import tech.yeswecode.coffee4codersv1.ui.theme.Coffee4Codersv1Theme
 import tech.yeswecode.coffee4codersv1.viewModels.CheckoutViewModel
-import tech.yeswecode.coffee4codersv1.viewModels.CountryISO
 import tech.yeswecode.coffee4codersv1.viewModels.DetailViewModel
 
 class MainActivity : ComponentActivity() {

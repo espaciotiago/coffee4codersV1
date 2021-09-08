@@ -1,4 +1,4 @@
-package tech.yeswecode.coffee4codersv1.viewModels
+package tech.yeswecode.coffee4codersv1.utilities
 
 import androidx.compose.ui.graphics.Color
 import tech.yeswecode.coffee4codersv1.R
